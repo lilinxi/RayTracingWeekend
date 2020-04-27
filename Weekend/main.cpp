@@ -48,7 +48,6 @@ void UpdateProgress(double progress) {
 Hitable *randomScene() {
     vector<Hitable *> list;
     list.push_back(new Sphere({0, -1000, 0}, 1000, new Lambertian({0.5, 0.5, 0.5})));
-    int i = 1;
     for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
             double chooseMat = drand48();
@@ -75,16 +74,16 @@ Hitable *randomScene() {
 
 int main() {
     auto start = std::chrono::system_clock::now();
-    int nx = 400;
-    int ny = 200;
-    int ns = 1;
+    int nx = 1080;
+    int ny = 720;
+    int ns = 100;
     ofstream fout("random_scene.ppm");
     fout << "P3" << endl << nx << " " << ny << endl << 255 << endl;
     Hitable *world = randomScene();
-    Vector3d lookFrom{3, 3, 2};
-    Vector3d lookAt{0, 0, -1};
-    double distToFocus = (lookFrom - lookAt).norm();
-    double aperture = 2.0;
+    Vector3d lookFrom{13,2,3};
+    Vector3d lookAt{0, 0, 0};
+    double distToFocus = 10.0;
+    double aperture = 0.1;
     Camera camera(lookFrom, lookAt, {0, 1, 0}, 20, double(nx) / double(ny), aperture, distToFocus);
     for (int j = ny - 1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
@@ -92,7 +91,7 @@ int main() {
             for (int s = 0; s < ns; s++) {
                 double u = double(i + drand48()) / double(nx);
                 double v = double(j + drand48()) / double(ny);
-                Ray ray = camera.getRay(u, v);
+                Ray ray = camera.getRayDefocusBlur(u, v);
                 col += color(ray, world, 0);
             }
             col /= double(ns);

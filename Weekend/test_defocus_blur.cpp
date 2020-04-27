@@ -71,7 +71,7 @@ int main() {
             for (int s = 0; s < ns; s++) {
                 double u = double(i + drand48()) / double(nx);
                 double v = double(j + drand48()) / double(ny);
-                Ray ray = camera.getRay(u, v);
+                Ray ray = camera.getRayDefocusBlur(u, v);
                 col += color(ray, world, 0);
             }
             col /= double(ns);
