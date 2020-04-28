@@ -1,3 +1,5 @@
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/Weekend/bin)
+
 add_executable(test_output_ppm test_output_ppm.cpp)
 add_executable(test_ray test_ray.cpp)
 add_executable(test_hit_sphere test_hit_sphere.cpp)

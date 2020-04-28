@@ -1,0 +1,5 @@
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/NextWeek/bin)
+add_executable(test_motion_blur test_motion_blur.cpp)
+add_executable(test_bvh test_bvh.cpp)
+add_executable(test_texture_1 test_texture_1.cpp)
+add_executable(test_texture_2 test_texture_2.cpp)
