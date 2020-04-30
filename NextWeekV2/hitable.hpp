@@ -135,7 +135,14 @@ public:
     }
 
     virtual bool boundingBox(double time0, double time1, AABB &box) const {
-        return false;
+        AABB box0(
+                this->center(time0) - Vector3d{this->_radius, this->_radius, this->_radius},
+                this->center(time0) + Vector3d{this->_radius, this->_radius, this->_radius});
+        AABB box1(
+                this->center(time1) - Vector3d{this->_radius, this->_radius, this->_radius},
+                this->center(time1) + Vector3d{this->_radius, this->_radius, this->_radius});
+        box = AABB::Union(box0, box1);
+        return true;
     }
 };
 

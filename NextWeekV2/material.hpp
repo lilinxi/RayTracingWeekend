@@ -141,4 +141,18 @@ public:
     }
 };
 
+//各向同性材质（烟雾用）
+class Isotropic : public Material {
+private:
+    Texture *_albedo;
+public:
+    Isotropic(Texture *albedo) : _albedo(albedo) {}
+
+    virtual bool scatter(const Ray &ray, const HitRecord &record, Vector3d &attenuation, Ray &scattered) const {
+        scattered = Ray(record.p, randomUnitSphere(), ray.time());
+        attenuation = this->_albedo->value(record.u, record.v, record.p);
+        return true;
+    }
+};
+
 #endif //MATERIAL_HPP

@@ -2,7 +2,6 @@
 #define TRANSLATE_HPP
 
 #include "hitable.hpp"
-#include "debug.hpp"
 
 class Translate : public Hitable {
 private:
