@@ -11,6 +11,9 @@ message(STATUS "    config: ${EIGEN3_ROOT_DIR}")
 message(STATUS "    version: ${EIGEN3_VERSION_STRING}")
 message(STATUS "    include path: ${EIGEN3_INCLUDE_DIRS}")
 
+include_directories(external)
+
 add_executable(RayTracingWeekend main.cpp)
 add_subdirectory(Weekend)
 add_subdirectory(NextWeek)
+add_subdirectory(NextWeekV2)
