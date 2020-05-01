@@ -1,5 +1,4 @@
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/NextWeekV2/bin)
-include_directories(test)
 add_executable(test_noise_1 test/test_noise_1.cpp)
 add_executable(test_light_1 test/test_light_1.cpp)
 add_executable(test_light_2 test/test_light_2.cpp)

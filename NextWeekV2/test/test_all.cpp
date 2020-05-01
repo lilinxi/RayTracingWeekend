@@ -112,9 +112,9 @@ int main() {
 //    nx = 1080;
 //    ny = 720;
 //    ns = 100;
-    nx = 4000;
-    ny = 4000;
-    ns = 200;
+//    nx = 4000;
+//    ny = 4000;
+//    ns = 200;
     ofstream fout("test_all.ppm");
     fout << "P3" << endl << nx << " " << ny << endl << 255 << endl;
     Hitable *world = cornellBox();
