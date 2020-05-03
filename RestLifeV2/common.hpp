@@ -59,6 +59,61 @@ Vector3d randomCosineDirection() {
     return {x, y, z};
 }
 
+Vector3d randomToSphere(double radius, double distanceSquared) {
+    double r1 = Random::GenUniformRandom(0, 1);
+    double r2 = Random::GenUniformRandom(0, 1);
+    double z = 1 + r2 * (sqrt(1 - radius * radius / distanceSquared) - 1);
+    double phi = 2 * M_PI * r1;
+    double x = cos(phi) * sqrt(1 - z * z);
+    double y = sin(phi) * sqrt(1 - z * z);
+    return {x, y, z};
+}
+
+//图像中的黑点是产生了Nan的像素，消除它或者忽略它
+Vector3d deNan(const Vector3d &v) {
+    Vector3d tmp = v;
+    if (!isnormal(tmp.x())) {
+        tmp[0] = 0;
+    }
+    if (!isnormal(tmp.y())) {
+        tmp[1] = 0;
+    }
+    if (!isnormal(tmp.z())) {
+        tmp[2] = 0;
+    }
+////    无法判断
+//    if (isnan(tmp.x())) {
+//        tmp[0] = 0;
+//    }
+//    if (isnan(tmp.y())) {
+//        tmp[1] = 0;
+//    }
+//    if (isnan(tmp.z())) {
+//        tmp[2] = 0;
+//    }
+////    正无穷
+//    if (1 == isinf(tmp.x())) {
+//        tmp[0] = 1;
+//    }
+//    if (1 == isinf(tmp.y())) {
+//        tmp[1] = 1;
+//    }
+//    if (1 == isinf(tmp.z())) {
+//        tmp[2] = 1;
+//    }
+////    负无穷
+//    if (-1 == isinf(tmp.x())) {
+//        tmp[0] = 1;
+//    }
+//    if (-1 == isinf(tmp.y())) {
+//        tmp[1] = 1;
+//    }
+//    if (-1 == isinf(tmp.z())) {
+//        tmp[2] = 1;
+//    }
+    return tmp;
+}
+
 inline double degrees_to_radians(double degrees) {
     return degrees * M_PI / 180.0;
 }

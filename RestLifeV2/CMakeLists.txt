@@ -1,0 +1,6 @@
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/RestLifeV2/bin)
+add_executable(test_new_pdf_interface_1 test/test_new_pdf_interface_1.cpp)
+add_executable(test_new_pdf_interface_2 test/test_new_pdf_interface_2.cpp)
+add_executable(test_new_pdf_interface_3 test/test_new_pdf_interface_3.cpp)
+add_executable(test_new_pdf_interface_4 test/test_new_pdf_interface_4.cpp)
+add_executable(test_new_pdf_interface_5 test/test_new_pdf_interface_5.cpp)

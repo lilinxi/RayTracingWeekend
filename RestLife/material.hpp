@@ -3,6 +3,7 @@
 
 #include "texture.hpp"
 #include "hitable.hpp"
+#include "onb.hpp"
 
 #define PDF_Epslion 0.0001
 
@@ -28,6 +29,10 @@ public:
     virtual Vector3d emitted(double u, double v, const Vector3d &p) const {
         return Vector3d{0, 0, 0};
     }
+
+    virtual Vector3d emitted(const Ray &ray, const HitRecord &record, double u, double v, const Vector3d &p) const {
+        return Vector3d{0, 0, 0};
+    }
 };
 
 //Lambertian 反射：理想散射
@@ -41,7 +46,7 @@ public:
     virtual bool
     scatter(const Ray &ray, const HitRecord &record, Vector3d &attenuation, Ray &scattered, double &pdf) const {
 //        Origin
-        /*
+/*
         attenuation = this->_albedo->value(record.u, record.v, record.p);
         Vector3d target = record.p + record.normal + randomUnitSphere();
         scattered = Ray(record.p, target - record.p, ray.time());
@@ -49,6 +54,7 @@ public:
         return true;
          */
 //        只采样上半球
+/*
         attenuation = this->_albedo->value(record.u, record.v, record.p);
         Vector3d direction;
         do {
@@ -56,6 +62,14 @@ public:
         } while (record.normal.dot(direction) < 0);
         scattered = Ray(record.p, direction, ray.time());
         pdf = 0.5 / M_PI;
+        */
+        attenuation = this->_albedo->value(record.u, record.v, record.p);
+        ONB uvw(record.normal);
+        do {
+            Vector3d direction = uvw.local(randomCosineDirection());
+            scattered = Ray(record.p, direction, ray.time());
+            pdf = uvw.w().dot(scattered.direction()) / M_PI;
+        } while (abs(pdf) < PDF_Epslion);
         return true;
     }
 
@@ -166,7 +180,17 @@ public:
     };
 
     virtual Vector3d emitted(double u, double v, const Vector3d &p) const {
+        return {0, 0, 0};
         return this->_emit->value(u, v, p);
+    }
+
+    virtual Vector3d emitted(const Ray &ray, const HitRecord &record, double u, double v, const Vector3d &p) const {
+//        天花板周围的灯有噪声，因为灯是双面的，这里删除一个面，只要向下的光
+        if (record.normal.dot(ray.direction()) < 0.0) {
+            return this->_emit->value(u, v, p);
+        } else {
+            return {0, 0, 0};
+        }
     }
 };
 

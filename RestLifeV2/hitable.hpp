@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "box.hpp"
+#include "onb.hpp"
 
 class Material;
 
@@ -91,6 +92,24 @@ public:
         box = AABB(this->_center - Vector3d{this->_radius, this->_radius, this->_radius},
                    this->_center + Vector3d{this->_radius, this->_radius, this->_radius});
         return true;
+    }
+
+    virtual double pdfValue(const Vector3d &o, const Vector3d &direction) const {
+        HitRecord record;
+        if (this->hit(Ray(o, direction), 0.001, MAXFLOAT, record)) {
+            double cosThetaMax = sqrt(1 - this->_radius * this->_radius / (this->_center - o).squaredNorm());
+            double solidAngle = 2 * M_PI * (1 - cosThetaMax);
+            return 1 / solidAngle;
+        } else {
+            return 0;
+        }
+    }
+
+    virtual Vector3d random(const Vector3d &o) {
+        Vector3d direction = this->_center - o;
+        double distanceSquared = direction.squaredNorm();
+        ONB uvw(direction);
+        return uvw.local(randomToSphere(this->_radius, distanceSquared));
     }
 };
 
@@ -200,6 +219,20 @@ public:
             }
         }
         return true;
+    }
+
+    virtual double pdfValue(const Vector3d &o, const Vector3d &direction) const {
+        double weight = 1.0 / this->_size;
+        double sum = 0;
+        for (int i = 0; i < this->_size; i++) {
+            sum += weight * this->_list[i]->pdfValue(o, direction);
+        }
+        return sum;
+    }
+
+    virtual Vector3d random(const Vector3d &o) {
+        int index = Random::GenUniformRandomi(0, this->_size);
+        return this->_list[index]->random(o);
     }
 };
 
