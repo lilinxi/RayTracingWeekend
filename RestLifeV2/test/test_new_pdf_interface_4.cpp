@@ -28,7 +28,7 @@ int main() {
     Hitable *world;
     Camera *camera;
     Hitable *sampleHitable;
-//    以玻璃球采样
+//    以光源和玻璃球采样
     CreateCornellBoxWithSpecularSphereSampleBoth(&world, &sampleHitable, &camera, double(nx) / double(ny));
     for (int j = ny - 1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
