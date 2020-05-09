@@ -183,6 +183,7 @@ Vector3d Color(const Ray &ray, Hitable *world, Hitable *light, int depth) {
                 scattered = Ray(hitRecord.p, mixturePdf.generate(), ray.time());
                 pdfValue = mixturePdf.value(scattered.direction());
             } while (pdfValue < PDF_Epslion);
+            delete scatterRecord.pdf;
             return emit.array() +
                    scatterRecord.attenuation.array() *
                    hitRecord.material->scatterPDF(ray, hitRecord, scattered) *

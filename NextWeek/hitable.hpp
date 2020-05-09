@@ -16,11 +16,7 @@ struct HitRecord {
     double v;
     Material *material;
 
-    friend std::ostream &operator<<(std::ostream &os, const HitRecord &record) {
-        os << "t: " << record.t << " p: " << record.p.transpose() << " normal: " << record.normal.transpose();
-        return os;
-    }
-};
+    };
 
 class AABB;
 

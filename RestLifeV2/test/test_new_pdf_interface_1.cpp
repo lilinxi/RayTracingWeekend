@@ -20,10 +20,10 @@ int main() {
     nx = 1080;
     ny = 720;
     ns = 10;
-//    nx = 4000;
-//    ny = 4000;
-//    ns = 200;
-    ofstream fout("test_new_pdf_interface_1.ppm");
+    nx = 1000;
+    ny = 1000;
+    ns = 100;
+    ofstream fout("test_new_pdf_interface_1_1000_1000_100.ppm");
     fout << "P3" << endl << nx << " " << ny << endl << 255 << endl;
     Hitable *world;
     Camera *camera;

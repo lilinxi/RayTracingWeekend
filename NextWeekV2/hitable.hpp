@@ -13,11 +13,7 @@ struct HitRecord {
     double u, v;            // 交点纹理坐标
     Material *material;     // 交点材质
 
-    friend std::ostream &operator<<(std::ostream &os, const HitRecord &record) {
-        os << "t: " << record.t << " p: " << record.p.transpose() << " normal: " << record.normal.transpose();
-        return os;
-    }
-};
+    };
 
 class Hitable {
 public:

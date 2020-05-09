@@ -2,6 +2,7 @@
 #define HITABLE_HPP
 
 #include <vector>
+#include <ostream>
 #include "box.hpp"
 #include "onb.hpp"
 
@@ -15,7 +16,8 @@ struct HitRecord {
     Material *material;     // 交点材质
 
     friend std::ostream &operator<<(std::ostream &os, const HitRecord &record) {
-        os << "t: " << record.t << " p: " << record.p.transpose() << " normal: " << record.normal.transpose();
+        os << "t: " << record.t << " p: " << record.p.transpose() << " normal: " << record.normal.transpose() << " u: " << record.u << " v: "
+           << record.v << " material: " << record.material;
         return os;
     }
 };
